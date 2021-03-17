@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Cookies from 'js-cookie'
 function Navbar() {
     return (
         <>
@@ -15,16 +16,7 @@ function Navbar() {
                             <Link class="nav-link" to="/">Home <span class="sr-only">(current)</span></Link>
                         </li>
                         <li class="nav-item">
-                            <Link class="nav-link" to="/login">Login</Link>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                hello
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/logout">Logout</a>
-                            </div>
+                            <Link class="nav-link" to="/login">{Cookies.get('logged') ? 'Logout' : 'Login'}</Link>
                         </li>
                     </ul>
                 </div>

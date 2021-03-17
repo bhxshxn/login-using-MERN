@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Home from './Home'
 import axios from 'axios';
+import Cookies from 'js-cookie'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Navbar from './Navbar';
 function Login() {
     const [status, setStatus] = useState()
     const [data, setData] = useState({
@@ -13,6 +15,9 @@ function Login() {
         event.preventDefault()
         const result = await axios.post(`http://localhost:4000/login`, data)
         setStatus(result.data.msg)
+        if (result.data.msg === 'success') {
+            Cookies.set('logged', 'yes');
+        }
         console.log(result.data.msg)
     }
     const inputEvent = (event) => {
@@ -34,7 +39,9 @@ function Login() {
     }
     if (status === "success") {
         return (
-            <Home />
+            <>
+                <Home />
+            </>
         )
     } else if (status) {
         return (
