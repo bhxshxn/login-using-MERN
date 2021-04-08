@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Home from './Home'
 import axios from 'axios';
 import Cookies from 'js-cookie'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Navbar from './Navbar';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 function Login() {
     const [status, setStatus] = useState()
     const [data, setData] = useState({
@@ -16,9 +15,9 @@ function Login() {
         const result = await axios.post(`http://localhost:4000/login`, data)
         setStatus(result.data.msg)
         if (result.data.msg === 'success') {
-            Cookies.set('logged', 'yes');
+            Cookies.set('user', result.data.user.username);
         }
-        console.log(result.data.msg)
+        window.location.reload()
     }
     const inputEvent = (event) => {
         const value = event.target.value
@@ -40,7 +39,7 @@ function Login() {
     if (status === "success") {
         return (
             <>
-                <Home />
+                <Redirect to="/" />
             </>
         )
     } else if (status) {

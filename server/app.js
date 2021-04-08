@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors')
-const port = 4000;
+const port = process.env.PORT || 4000;
 const User = require('./models/user')
 const bcrypt = require('bcrypt');
 app.use(express.json())
@@ -86,8 +86,10 @@ app.post('/login', async (req, res) => {
         res.send({ msg: "Invalid useranme or password" });
         return;
     }
-    res.send({ msg: "success" });
+    res.send({ msg: "success", user: { username: username } });
 })
+
+app.get('logout',);
 app.listen(port, () => {
     console.log(`Server is running at: http://localhost:${port}`);
 });
